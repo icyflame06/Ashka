@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admissions | Ashka Education</title>
+    <!-- We can reuse the same stylesheet -->
+    <link rel="stylesheet" href="/src/style.css">
+    <style>
+      .admissions-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4rem 2rem;
+        background-color: var(--bg-primary);
+      }
+      .admissions-form-wrapper {
+        background: var(--bg-secondary);
+        padding: 4rem;
+        border: 1px solid var(--hairline);
+        width: 100%;
+        max-width: 600px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+      }
+      .form-title {
+        font-family: var(--font-heading);
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: var(--text-dark);
+        text-align: center;
+      }
+      .form-subtitle {
+        text-align: center;
+        color: var(--text-secondary);
+        margin-bottom: 3rem;
+      }
+      .form-group {
+        margin-bottom: 2rem;
+      }
+      .form-label {
+        display: block;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        margin-bottom: 0.5rem;
+        color: var(--text-secondary);
+      }
+      .form-input, .form-select {
+        width: 100%;
+        padding: 1rem;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid var(--hairline);
+        font-family: var(--font-body);
+        font-size: 1rem;
+        color: var(--text-dark);
+        transition: border-color 0.3s ease;
+      }
+      .form-input:focus, .form-select:focus {
+        outline: none;
+        border-bottom-color: var(--accent-gold);
+      }
+      .btn-submit {
+        width: 100%;
+        margin-top: 2rem;
+        background: var(--text-dark);
+        color: var(--bg-primary);
+        border: 1px solid var(--text-dark);
+        padding: 1rem;
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      .btn-submit:hover {
+        background: var(--accent-gold);
+        border-color: var(--accent-gold);
+        color: white;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 2rem;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: var(--text-secondary);
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.3s;
+      }
+      .back-link:hover {
+        border-color: var(--text-secondary);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="admissions-container">
+      <div class="admissions-form-wrapper">
+        <a href="/" class="back-link">← Back to Home</a>
+        <h1 class="form-title">Admissions</h1>
+        <p class="form-subtitle">Join the Temple of Learning.</p>
+        
+        <form id="admissionsForm">
+          <div class="form-group">
+            <label class="form-label" for="name">Full Name</label>
+            <input type="text" id="name" class="form-input" required placeholder="John Doe">
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="email">Email Address</label>
+            <input type="email" id="email" class="form-input" required placeholder="john@example.com">
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="phone">Phone Number</label>
+            <input type="tel" id="phone" class="form-input" required placeholder="+91 98765 43210">
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="standard">Standard</label>
+            <select id="standard" class="form-select" required>
+              <option value="" disabled selected>Select Standard</option>
+              <option value="8">Standard 8</option>
+              <option value="9">Standard 9</option>
+              <option value="10">Standard 10 (Board)</option>
+              <option value="11">Standard 11</option>
+              <option value="12">Standard 12 (Board)</option>
+            </select>
+          </div>
+          
+          <button type="button" class="btn-submit" onclick="alert('Slot booked successfully! We will contact you soon.')">Book a Slot</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

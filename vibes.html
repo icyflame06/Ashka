@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vibes | Ashka Group</title>
+    <link rel="stylesheet" href="/src/style.css">
+    <link rel="stylesheet" href="/src/vibes.css">
+  </head>
+  <body>
+    <!-- No Navbar for immersive experience -->
+    <a href="/index.html" style="position: fixed; top: 2rem; right: 3rem; color: white; text-decoration: none; font-size: 1.25rem; font-family: var(--font-heading); z-index: 100; letter-spacing: 0.1em; opacity: 0.8; transition: opacity 0.3s;">
+      &times; CLOSE
+    </a>
+
+    <main class="vibes-main">
+      <!-- Hero Section -->
+      <section class="vibes-hero">
+        <div class="vibes-hero-bg">
+          <!-- Animated collage injected here if needed, or static for now -->
+          <img src="/hero-bg.jpeg" class="vibes-hero-image" alt="Ashka Community" />
+        </div>
+        <div class="vibes-hero-overlay"></div>
+        <div class="vibes-hero-content">
+          <p class="vibes-label">ASHKA VIBES</p>
+          <h1 class="vibes-title">THE SOUND.<br>THE STORIES.<br>THE SPIRIT.</h1>
+          <p class="vibes-subtitle">"Every journey creates memories. Every memory has a story. And every story has a sound."</p>
+
+        </div>
+      </section>
+
+
+
+      <!-- Dynamic Media Grid -->
+      <section class="vibes-media-grid-section">
+        <div class="media-grid" id="media-grid">
+          <!-- Items injected by JS -->
+        </div>
+      </section>
+
+      <!-- Memory Wall -->
+      <section class="vibes-memory-wall">
+        <h2 class="memory-wall-title">MEMORIES THAT STAY</h2>
+        <div class="memory-scroll-container" id="memory-wall-scroll">
+          <!-- Memories injected by JS -->
+        </div>
+      </section>
+
+
+    </main>
+
+    <!-- Global Sticky Mini-Player -->
+    <div id="sticky-audio-player" class="sticky-player hidden">
+      <div class="player-info">
+        <span class="player-label">♪ Currently Playing</span>
+        <h4 id="player-title" class="player-title">Ashka Theme Song</h4>
+      </div>
+      <div class="player-visualizer" id="player-visualizer">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+      <div class="player-controls">
+        <button id="player-playpause" class="control-btn">⏸ Pause</button>
+        <div class="player-progress-container">
+          <div id="player-progress-bar" class="player-progress-bar"></div>
+        </div>
+        <button id="player-close" class="control-btn close-btn">✕ Close</button>
+      </div>
+      <audio id="global-audio" src=""></audio>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="video-modal" class="video-modal hidden">
+      <div class="video-modal-overlay"></div>
+      <div class="video-modal-content">
+        <button id="video-close" class="video-close-btn">&times;</button>
+        <div class="video-container">
+          <video id="modal-video-player" controls preload="metadata">
+            <source src="" type="video/mp4">
+          </video>
+          <iframe id="modal-iframe-player" class="hidden" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <span id="video-modal-category" class="video-category"></span>
+          <h3 id="video-modal-title" class="video-modal-title"></h3>
+          <p id="video-modal-desc" class="video-modal-desc"></p>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/vibes.js"></script>
+  </body>
+</html>

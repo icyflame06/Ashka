@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ashka Business Journal</title>
+    <link rel="stylesheet" href="/src/style.css">
+    <style>
+      .article-hero {
+        padding: 8rem 4rem 4rem;
+        background-color: var(--bg-primary);
+        text-align: center;
+      }
+      .article-meta {
+        color: var(--accent-gold);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-size: 0.875rem;
+        margin-bottom: 2rem;
+      }
+      .article-title {
+        font-size: 4rem;
+        color: var(--text-dark);
+        margin-bottom: 2rem;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .article-subtitle {
+        font-size: 1.5rem;
+        color: var(--text-secondary);
+        font-family: var(--font-body);
+        font-weight: 300;
+        max-width: 700px;
+        margin: 0 auto 4rem;
+      }
+      .article-image {
+        width: 100%;
+        max-width: 1000px;
+        height: 60vh;
+        object-fit: cover;
+        margin: 0 auto;
+        display: block;
+      }
+      .article-content {
+        max-width: 800px;
+        margin: 4rem auto;
+        padding: 0 2rem;
+        font-size: 1.125rem;
+        line-height: 1.8;
+      }
+      .article-content h3 {
+        font-size: 2rem;
+        margin: 3rem 0 1.5rem;
+        color: var(--deep-navy);
+      }
+      .article-content p {
+        margin-bottom: 1.5rem;
+      }
+      .article-content ul {
+        margin-left: 2rem;
+        margin-bottom: 2rem;
+        list-style-type: disc;
+      }
+      .article-content li {
+        margin-bottom: 0.5rem;
+      }
+      
+      .ashka-perspective {
+        background: #f0ece1;
+        padding: 4rem;
+        margin: 4rem 0;
+        border-left: 4px solid var(--accent-gold);
+      }
+      .ashka-perspective h3 {
+        margin-top: 0;
+        color: var(--accent-gold);
+      }
+
+      .questions-section {
+        margin-top: 4rem;
+        padding-top: 4rem;
+        border-top: 1px solid var(--hairline);
+      }
+
+      .sources-section {
+        margin-top: 4rem;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+      }
+      .sources-section a {
+        text-decoration: underline;
+      }
+
+      .cta-section {
+        text-align: center;
+        padding: 4rem;
+        background: var(--deep-navy);
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="nav-brand"><a href="/">ASHKA GROUP</a></div>
+      <div class="nav-links">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/journal.html" class="nav-link">Journal</a>
+      </div>
+    </nav>
+
+    <div id="loading" style="text-align:center; padding: 10rem;">Loading...</div>
+    <div id="article-container" style="display: none;">
+      <header class="article-hero">
+        <div class="article-meta" id="a-meta"></div>
+        <h1 class="article-title" id="a-title"></h1>
+        <p class="article-subtitle" id="a-subtitle"></p>
+        <img id="a-image" class="article-image" src="" alt="">
+      </header>
+
+      <div class="article-content" id="a-content">
+        <!-- Content injected here -->
+      </div>
+      
+      <div class="article-content">
+        <div class="ashka-perspective">
+          <h3>The Ashka Perspective</h3>
+          <p id="a-perspective"></p>
+        </div>
+
+        <div class="questions-section">
+          <h3>Questions for Entrepreneurs</h3>
+          <ul id="a-questions"></ul>
+        </div>
+
+        <div class="sources-section">
+          <h4>Sources</h4>
+          <ul id="a-sources"></ul>
+        </div>
+      </div>
+    </div>
+
+    <section class="cta-section" style="display: none;" id="cta">
+      <h2 style="font-size: 3rem; margin-bottom: 2rem;">Continue the Conversation</h2>
+      <p style="margin-bottom: 2rem;">Have a perspective, experience, or question about this development?</p>
+      <button class="btn-primary" style="border-color: white; color: white;">Join Ashka Business Circle</button>
+    </section>
+
+    <script>
+      async function loadArticle() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const slug = urlParams.get('slug');
+        if (!slug) {
+          document.getElementById('loading').innerText = "Article not found.";
+          return;
+        }
+
+        try {
+          const res = await fetch(\`/api/journal/posts/\${slug}\`);
+          if (!res.ok) throw new Error('Not found');
+          const post = await res.json();
+          
+          document.title = post.seo_title || post.title;
+          
+          document.getElementById('a-meta').innerText = \`\${post.category} • \${new Date(post.published_at).toLocaleDateString()}\`;
+          document.getElementById('a-title').innerText = post.title;
+          document.getElementById('a-subtitle').innerText = post.summary;
+          
+          const img = document.getElementById('a-image');
+          img.src = post.hero_image || 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80';
+          
+          document.getElementById('a-content').innerHTML = post.content;
+          document.getElementById('a-perspective').innerText = post.ashka_perspective;
+          
+          const questions = JSON.parse(post.entrepreneur_questions || '[]');
+          document.getElementById('a-questions').innerHTML = questions.map(q => \`<li>\${q}</li>\`).join('');
+
+          if (post.sources && post.sources.length > 0) {
+            document.getElementById('a-sources').innerHTML = post.sources.map(s => \`
+              <li><a href="\${s.source_url}" target="_blank">\${s.source_name} - \${s.source_title}</a> (\${s.publication_date})</li>
+            \`).join('');
+          }
+
+          document.getElementById('loading').style.display = 'none';
+          document.getElementById('article-container').style.display = 'block';
+          document.getElementById('cta').style.display = 'block';
+        } catch (error) {
+          console.error(error);
+          document.getElementById('loading').innerText = "Failed to load article.";
+        }
+      }
+
+      loadArticle();
+    </script>
+  </body>
+</html>

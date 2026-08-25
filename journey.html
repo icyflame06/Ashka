@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Journey | Ashka Group</title>
+  </head>
+  <body>
+    <!-- No Navbar for immersive experience -->
+    <a href="/index.html" style="position: fixed; top: 2rem; right: 3rem; color: white; text-decoration: none; font-size: 1.25rem; font-family: var(--font-heading); z-index: 100; letter-spacing: 0.1em; opacity: 0.8; transition: opacity 0.3s;">
+      &times; CLOSE
+    </a>
+
+    <!-- Background Cinematic System -->
+    <div id="journey-bg-container" class="journey-bg-container">
+      <!-- Background images injected by JS -->
+    </div>
+    <div class="journey-bg-overlay"></div>
+
+    <main class="journey-main">
+      <!-- Intro Section -->
+      <section class="journey-intro">
+        <p class="journey-label">OUR JOURNEY</p>
+        <h1 class="journey-title">MORE THAN THREE DECADES.<br>ONE CONTINUOUS JOURNEY.</h1>
+        <p class="journey-subtitle">Since 1992, Ashka has grown through generations of students, mentors, entrepreneurs, and community members. What began with a vision for education has evolved into a larger ecosystem built around learning, leadership, entrepreneurship, and service.</p>
+        <p class="scroll-instruction">SCROLL TO EXPLORE</p>
+        <div class="scroll-indicator">↓</div>
+      </section>
+
+      <!-- Interactive Timeline -->
+      <section class="journey-timeline-section">
+        
+        <div class="timeline-sticky-wrapper">
+          <!-- Left: Graphical Timeline Line -->
+          <div class="timeline-track-container">
+            <div class="timeline-track">
+              <div class="timeline-progress"></div>
+              <!-- Nodes injected by JS -->
+            </div>
+          </div>
+
+          <!-- Right: Story Area -->
+          <div class="timeline-story-container">
+            <h2 id="story-year" class="story-year">1992</h2>
+            <h3 id="story-title" class="story-title">THE BEGINNING</h3>
+            <div id="story-description" class="story-description">
+              <p>Ashka Education was founded by Mr. Alpesh Thakkar.</p>
+              <p>A vision was established: to provide quality education while nurturing discipline, values, confidence, and character.</p>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </main>
+
+    <script type="module" src="/src/journey.js"></script>
+  </body>
+</html>

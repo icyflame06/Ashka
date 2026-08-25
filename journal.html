@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ashka Business Journal - Understanding India's Business Today</title>
+    <link rel="stylesheet" href="/src/style.css">
+    <style>
+      .journal-header {
+        padding: 10rem 4rem 4rem;
+        background-color: var(--deep-navy);
+        color: var(--bg-primary);
+        text-align: center;
+      }
+      .journal-title {
+        font-size: 5rem;
+        color: var(--accent-gold);
+        margin-bottom: 1rem;
+      }
+      .journal-subtitle {
+        font-size: 1.5rem;
+        color: rgba(255,255,255,0.8);
+        font-family: var(--font-body);
+        font-weight: 300;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .articles-container {
+        max-width: 900px;
+        margin: 4rem auto;
+        padding: 0 2rem;
+      }
+      .expandable-blog {
+        background: var(--bg-secondary);
+        border: 1px solid var(--hairline);
+        margin-bottom: 2rem;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: box-shadow 0.3s;
+      }
+      .expandable-blog:hover {
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      }
+      .blog-header {
+        padding: 2rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #fff;
+      }
+      .blog-title {
+        font-size: 2rem;
+        color: var(--deep-navy);
+        margin: 0;
+      }
+      .blog-subtitle {
+        color: var(--accent-gold);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+      .expand-icon {
+        font-size: 2rem;
+        color: var(--accent-gold);
+        transition: transform 0.3s;
+      }
+      .blog-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease-out, padding 0.5s ease;
+        background: var(--bg-primary);
+        padding: 0 3rem;
+      }
+      .blog-content.expanded {
+        max-height: 2000px; /* arbitrary large value for transition */
+        padding: 2rem 3rem 3rem;
+      }
+      .blog-text {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--text-secondary);
+      }
+      .blog-text h3 {
+        color: var(--text-dark);
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- No Navbar for immersive experience -->
+    <a href="/index.html" style="position: fixed; top: 2rem; right: 3rem; color: white; text-decoration: none; font-size: 1.25rem; font-family: var(--font-heading); z-index: 100; letter-spacing: 0.1em; opacity: 0.8; transition: opacity 0.3s;">
+      &times; CLOSE
+    </a>
+
+    <header class="journal-header">
+      <h1 class="journal-title">ASHKA BUSINESS JOURNAL</h1>
+      <p class="journal-subtitle">Understanding India's Business Today. Building Tomorrow's Opportunities.</p>
+    </header>
+
+    <section class="articles-container">
+      
+      <!-- Dynamically Rendered AI Blogs -->
+      <div id="articles-container">
+        <p style="text-align: center; color: var(--text-secondary);">Loading latest insights...</p>
+      </div>
+
+    </section>
+
+    <script>
+      async function loadPosts() {
+        const container = document.getElementById('articles-container');
+        try {
+          const res = await fetch('/api/journal/posts');
+          if (!res.ok) throw new Error('Failed to fetch posts');
+          const posts = await res.json();
+          
+          if (posts.length === 0) {
+            container.innerHTML = '<p style="text-align: center;">No AI insights published yet. Please generate some in the admin panel.</p>';
+            return;
+          }
+
+          container.innerHTML = posts.map(post => `
+            <div class="expandable-blog">
+              <div class="blog-header" onclick="toggleBlog('blog-${post.id}')">
+                <div>
+                  <span class="blog-subtitle">${post.category}</span>
+                  <h2 class="blog-title">${post.title}</h2>
+                </div>
+                <div class="expand-icon" id="icon-blog-${post.id}">+</div>
+              </div>
+              <div class="blog-content" id="blog-${post.id}">
+                <div class="blog-text">
+                  ${post.content}
+                </div>
+              </div>
+            </div>
+          `).join('');
+        } catch (error) {
+          console.error(error);
+          container.innerHTML = '<p style="text-align: center; color: red;">Error loading articles. Is the backend server running?</p>';
+        }
+      }
+
+      function toggleBlog(id) {
+        const content = document.getElementById(id);
+        const icon = document.getElementById('icon-' + id);
+        
+        if (content.classList.contains('expanded')) {
+          content.classList.remove('expanded');
+          icon.style.transform = 'rotate(0deg)';
+          icon.innerHTML = '+';
+        } else {
+          // Collapse all others first
+          document.querySelectorAll('.blog-content').forEach(el => el.classList.remove('expanded'));
+          document.querySelectorAll('.expand-icon').forEach(el => {
+            el.style.transform = 'rotate(0deg)';
+            el.innerHTML = '+';
+          });
+          
+          // Expand clicked
+          content.classList.add('expanded');
+          icon.style.transform = 'rotate(45deg)';
+          icon.innerHTML = '&times;';
+        }
+      }
+
+      loadPosts();
+    </script>
+  </body>
+</html>

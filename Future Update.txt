@@ -1,0 +1,6 @@
+1. Blog section make it automated using new content on google
+2. Dedicated Gallery section
+3. Inquiry form
+4. Timelines
+5. Section about song and video of Ashka
+6. Team Section
